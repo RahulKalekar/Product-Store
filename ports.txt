@@ -1,0 +1,3 @@
+productservice		8091		dep: web,jpa,security,devtools,actuator,lombok,validation	
+
+productdb	products

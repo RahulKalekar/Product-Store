@@ -1,0 +1,39 @@
+server:
+  port:
+    8091
+
+spring:
+  application:
+    name:
+      productservice
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: productdb
+      repositories:
+        enabled: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Exposes all actuator endpoints
+  endpoint:
+    health:
+      show-details: always  # Shows detailed health info
+    info:
+      enabled: true  # Enables the /actuator/info endpoint
+
+logging:
+  level:
+    org:
+    springframework:
+      data:
+        mongodb:
+          repository:
+            query: debug
+          core:
+            repository:
+              query: debug
