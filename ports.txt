@@ -1,3 +1,8 @@
-productservice		8091		dep: web,jpa,security,devtools,actuator,lombok,validation	
+productservice		8091		dep: web,security,devtools,actuator,lombok,validation	
 
 productdb	products
+
+
+inventoryservice    8092        dep: web,jpa,actuator,lombok,test,mysql,openfeign, cloud dep,
+
+trainingdb  inventory

@@ -1,7 +1,9 @@
 package com.rahul.productservice.service;
 
+import com.rahul.productservice.dto.InventoryRequest;
 import com.rahul.productservice.entities.Product;
 import com.rahul.productservice.exceptions.ProductNotFoundException;
+import com.rahul.productservice.feign.InventoryFeignClient;
 import com.rahul.productservice.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private InventoryFeignClient inventoryFeignClient;
     @Override
     public List<Product> getAllProducts() {
         return productRepo.findAll();
@@ -25,14 +29,16 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product addProduct(Product product) {
-        if (!productRepo.existsById(product.getProductId())) {
-            throw new ProductNotFoundException("Cannot update. Product not found with ID: " + product.getProductId());
-        }
-        return productRepo.save(product);
+        Product savedProduct=productRepo.save(product);
+        inventoryFeignClient.createInventory(new InventoryRequest(savedProduct.getProductId(), 0));
+        return savedProduct;
     }
 
     @Override
     public Product updateProduct(Product product) {
+        if (!productRepo.existsById(product.getProductId())) {
+            throw new ProductNotFoundException("Cannot update. Product not found with ID: " + product.getProductId());
+        }
         return productRepo.save(product);
     }
 
@@ -42,5 +48,6 @@ public class ProductServiceImpl implements ProductService{
             throw new ProductNotFoundException("Cannot delete. Product not found with ID: " + productId);
         }
         productRepo.deleteById(productId);
+        inventoryFeignClient.deleteInventory(productId);
     }
 }
