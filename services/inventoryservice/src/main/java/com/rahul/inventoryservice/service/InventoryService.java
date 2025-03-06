@@ -16,5 +16,5 @@ public interface InventoryService {
     void increaseQuantity(String productId, Integer quantity);
     Inventory getInventoryByProductId(String productId);
     List<Inventory> getAllInventory();
-
+    boolean checkStock(String productId, Integer quantity);
 }

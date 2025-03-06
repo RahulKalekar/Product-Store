@@ -1,13 +1,13 @@
-package com.rahul.inventoryservice;
+package com.rahul.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
-public class InventoryserviceApplication {
+public class GatewayApplication {
+
 	public static void main(String[] args) {
-		SpringApplication.run(InventoryserviceApplication.class, args);
+		SpringApplication.run(GatewayApplication.class, args);
 	}
 
 }

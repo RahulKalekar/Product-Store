@@ -43,4 +43,10 @@ public class InventoryController {
         inventoryService.increaseQuantity(productId, quantity);
         return ResponseEntity.ok("Inventory increased successfully.");
     }
+
+    @GetMapping("/check/{productId}/{quantity}")
+    public ResponseEntity<Boolean> checkStock(@PathVariable String productId, @PathVariable Integer quantity) {
+        return ResponseEntity.ok(inventoryService.checkStock(productId, quantity));
+    }
+
 }

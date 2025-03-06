@@ -3,16 +3,18 @@ package com.rahul.inventoryservice.service;
 import com.rahul.inventoryservice.entities.Inventory;
 import com.rahul.inventoryservice.exceptions.InventoryNotFoundException;
 import com.rahul.inventoryservice.repo.InventoryRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class InventoryServiceImpl implements InventoryService {
 
-    @Autowired
-    private InventoryRepo inventoryRepo;
+    private final InventoryRepo inventoryRepo;
 
     @Override
     public void addInventory(Inventory inventory) {
@@ -57,4 +59,12 @@ public class InventoryServiceImpl implements InventoryService {
     public List<Inventory> getAllInventory() {
         return inventoryRepo.findAll();
     }
+
+    @Override
+    public boolean checkStock(String productId, Integer quantity) {
+        return inventoryRepo.existsById(productId) && inventoryRepo.findById(productId).get().getQuantity() >= quantity;
+    }
+
+
 }
+

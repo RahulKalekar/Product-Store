@@ -1,8 +1,19 @@
-productservice		8091		dep: web,security,devtools,actuator,lombok,validation	
+productservice		8091		dep: web,security,devtools,actuator,lombok,validation,openfeign,cloud dep,mongo
 
 productdb	products
 
 
-inventoryservice    8092        dep: web,jpa,actuator,lombok,test,mysql,openfeign, cloud dep,
+inventoryservice    8092        dep: web,jpa,actuator,lombok,test,mysql,openfeign, cloud dep,kafka,kafka-testx
 
 trainingdb  inventory
+
+
+orderservice        8093        dep: web,jpa,actuator,lombok,test,mysql,kafka
+
+
+
+gateway             8090        
+
+
+keycloak            8092
+keycloak sql        3307
