@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,9 +27,9 @@ public class Product {
     private String productDescription;
     @NotNull(message = "Price cannot be null")
     @Min(value = 1, message = "Price must be at least 1")
-    private String productPrice;
+    private BigDecimal productPrice;
 
-    public Product(String productName, String productDescription, String productPrice) {
+    public Product(String productName, String productDescription, BigDecimal productPrice) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;

@@ -12,7 +12,7 @@ orderservice        8093        dep: web,jpa,actuator,lombok,test,mysql,kafka
 
 
 
-gateway             8090        
+gateway             8090   spring-cloud-starter-gateway, spring-security-oauth2-resource-server, spring-boot-starter-security, spring-security-oauth2-jose<
 
 
 keycloak            8092

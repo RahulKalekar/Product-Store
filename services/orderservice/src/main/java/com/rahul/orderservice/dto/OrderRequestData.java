@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequest {
+public class OrderRequestData {
+    private String emailId;
     private String productId;
     private Integer quantity;
 }

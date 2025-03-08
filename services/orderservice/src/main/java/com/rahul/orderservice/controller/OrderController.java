@@ -1,6 +1,7 @@
 package com.rahul.orderservice.controller;
 
 import com.rahul.orderservice.dto.OrderRequest;
+import com.rahul.orderservice.dto.OrderRequestData;
 import com.rahul.orderservice.dto.UserInfo;
 import com.rahul.orderservice.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,13 +23,15 @@ import org.springframework.web.server.ServerWebExchange;
 @RequestMapping("orders")
 public class OrderController {
     private final OrderService orderService;
+
     @Autowired
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
-    @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
-        orderService.createOrder(request);
+    @PostMapping("/create")
+    public ResponseEntity<String> createOrder(@RequestBody OrderRequest request,@RequestHeader(name = "X-User-Email") String email) {
+        OrderRequestData data = new OrderRequestData(email, request.getProductId(), request.getQuantity());
+        orderService.createOrder(data);
         return ResponseEntity.ok("Order placed successfully!");
     }
 
