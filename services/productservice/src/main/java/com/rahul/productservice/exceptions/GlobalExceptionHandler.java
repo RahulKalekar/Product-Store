@@ -34,4 +34,11 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(ex.getMessage(),"Database error", HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(Exception ex) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                ex.getMessage(), "An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

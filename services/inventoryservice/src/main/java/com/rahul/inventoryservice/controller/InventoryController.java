@@ -1,5 +1,6 @@
 package com.rahul.inventoryservice.controller;
 
+import com.rahul.inventoryservice.dto.InventoryStatus;
 import com.rahul.inventoryservice.entities.Inventory;
 import com.rahul.inventoryservice.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/inventory")
+@RequestMapping("/api/inventory")
 public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Inventory>> getAllInventory() {
         return ResponseEntity.ok(inventoryService.getAllInventory());
     }
-    @GetMapping("/{productId}")
+    @GetMapping("/id/{productId}")
     public ResponseEntity<Inventory> getInventoryByProductId(@PathVariable String productId) {
         return ResponseEntity.ok(inventoryService.getInventoryByProductId(productId));
     }
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<String> addInventory(@RequestBody Inventory inventory) {
         inventoryService.addInventory(inventory);
         return ResponseEntity.status(HttpStatus.CREATED).body("Inventory added successfully.");
@@ -45,7 +46,7 @@ public class InventoryController {
     }
 
     @GetMapping("/check/{productId}/{quantity}")
-    public ResponseEntity<Boolean> checkStock(@PathVariable String productId, @PathVariable Integer quantity) {
+    public ResponseEntity<InventoryStatus> checkStock(@PathVariable String productId, @PathVariable Integer quantity) {
         return ResponseEntity.ok(inventoryService.checkStock(productId, quantity));
     }
 

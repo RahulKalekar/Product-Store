@@ -1,0 +1,35 @@
+package com.rahul.inventoryservice.controller;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+class InventoryControllerTest {
+
+    @Test
+    void getAllInventory() {
+    }
+
+    @Test
+    void getInventoryByProductId() {
+    }
+
+    @Test
+    void addInventory() {
+    }
+
+    @Test
+    void removeInventory() {
+    }
+
+    @Test
+    void decreaseQuantity() {
+    }
+
+    @Test
+    void increaseQuantity() {
+    }
+
+    @Test
+    void checkStock() {
+    }
+}

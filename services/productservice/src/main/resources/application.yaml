@@ -13,27 +13,42 @@ spring:
       database: productdb
       repositories:
         enabled: true
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: product-group
-      auto-offset-reset: earliest
-      enable-auto-commit: false
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+
 
 
 management:
+  # Endpoints exposure
   endpoints:
     web:
       exposure:
-        include: "*"  # Exposes all actuator endpoints
+        include: "*"
   endpoint:
     health:
-      show-details: always  # Shows detailed health info
-    info:
-      enabled: true  # Enables the /actuator/info endpoint
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
 
+  # Metrics configuration
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true             #grafana dashboard wont get data if this is not present
+  observations:
+    key-values:
+      application: productservice     #needed in grafana querying
 logging:
   level:
     org:
@@ -45,3 +60,6 @@ logging:
           core:
             repository:
               query: debug
+springdoc:
+  swagger-ui.path: /swagger-ui.html
+  api-docs.path: /v3/api-docs

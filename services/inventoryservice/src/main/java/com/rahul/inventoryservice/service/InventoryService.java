@@ -1,5 +1,6 @@
 package com.rahul.inventoryservice.service;
 
+import com.rahul.inventoryservice.dto.InventoryStatus;
 import com.rahul.inventoryservice.entities.Inventory;
 import com.rahul.inventoryservice.repo.InventoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,5 @@ public interface InventoryService {
     void increaseQuantity(String productId, Integer quantity);
     Inventory getInventoryByProductId(String productId);
     List<Inventory> getAllInventory();
-    boolean checkStock(String productId, Integer quantity);
+    InventoryStatus checkStock(String productId, Integer quantity);
 }

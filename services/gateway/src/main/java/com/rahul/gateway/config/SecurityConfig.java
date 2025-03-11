@@ -20,12 +20,17 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
+    private final String[] freeResourceUrls = {"/swagger-ui.html/**", "/swagger-ui/**", "/v3/api-docs/**",
+            "/swagger-resources/**","/webjars/**", "/api-docs/**", "/aggregate/**", "/actuator/prometheus" };
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
+
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/orders/**").hasAuthority("ROLE_USER")
+                        .pathMatchers(freeResourceUrls).permitAll()  // Change to permitAll()
+                        .pathMatchers("/api/orders/create").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .pathMatchers("/api/products/all", "/products/{id}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .pathMatchers("/**").hasAuthority("ROLE_ADMIN")
                         .anyExchange().authenticated()
                 )

@@ -23,11 +23,11 @@ public class UserInfoFilter implements GlobalFilter {
                 .cast(JwtAuthenticationToken.class)
                 .map(token -> {
                     Jwt jwt = token.getToken();
-                    
+
                     // Extract email and name from JWT claims
                     String email = jwt.getClaim("email");
                     String name = jwt.getClaim("name");
-                    
+
                     log.debug("Extracted email: {}, name: {}", email, name);
 
                     // Add these as headers to the request

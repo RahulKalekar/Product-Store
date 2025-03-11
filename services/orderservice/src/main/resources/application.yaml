@@ -23,3 +23,63 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10  # Tracks last 10 calls
+        sliding-window-type: COUNT_BASED  # Ensures counting behavior
+        permitted-number-of-calls-in-half-open-state: 2
+        failure-rate-threshold: 50  # Opens if 50% of calls fail
+        slow-call-rate-threshold: 50
+        slow-call-duration-threshold: 2s
+        wait-duration-in-open-state: 10s  # Time before retrying
+        minimum-number-of-calls: 5  # Must receive 5 calls before evaluating
+        automatic-transition-from-open-to-half-open-enabled: true
+
+
+management:
+  # Endpoints exposure
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+  # Metrics configuration
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true             #grafana dashboard wont get data if this is not present
+  observations:
+    key-values:
+      application: orderservice     #needed in grafana querying
+
+
+springdoc:
+  swagger-ui.path: /swagger-ui.html
+  api-docs.path: /v3/api-docs
+

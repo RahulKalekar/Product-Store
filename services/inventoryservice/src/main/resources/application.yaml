@@ -1,4 +1,12 @@
+server:
+  port:
+    8092
+
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: inventory_group
   application:
     name:
       inventoryservice
@@ -20,6 +28,45 @@ spring:
         format_sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
-server:
-  port:
-    8092
+
+
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+
+management:
+  # Endpoints exposure
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+  # Metrics configuration
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true             #grafana dashboard wont get data if this is not present
+  observations:
+    key-values:
+      application: orderservice     #needed in grafana querying
